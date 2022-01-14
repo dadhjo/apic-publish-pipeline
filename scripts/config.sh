@@ -17,6 +17,7 @@ fi
 cd ..
 rm -rf config
 mkdir config
+cp scripts/toolkit-linux.tgz config
 cd config
 
 # Get the needed URLs for the automation
@@ -56,13 +57,13 @@ ADMIN_REALM="admin/default-idp-1"
 
 # Get the APIC CLI
 echo Get the APIC CLI
-echo "curl -s --write-out '%{http_code}' https://${APIC_ADMIN_URL}/client-downloads/toolkit-linux.tgz --insecure --output toolkit-linux.tgz"
-HTTP_CODE=`curl -s --write-out '%{http_code}' https://${APIC_ADMIN_URL}/client-downloads/toolkit-linux.tgz --insecure --output toolkit-linux.tgz`
-if [[ "${HTTP_CODE}" != "200" ]]
-then 
-  echo "[ERROR][config.sh] - An error ocurred downloading the APIC toolkit to get the APIC CLI"
-  exit 1
-fi
+#echo "curl -s --write-out '%{http_code}' https://${APIC_ADMIN_URL}/client-downloads/toolkit-linux.tgz --insecure --output toolkit-linux.tgz"
+#HTTP_CODE=`curl -s --write-out '%{http_code}' https://${APIC_ADMIN_URL}/client-downloads/toolkit-linux.tgz --insecure --output toolkit-linux.tgz`
+#if [[ "${HTTP_CODE}" != "200" ]]
+#then 
+#  echo "[ERROR][config.sh] - An error ocurred downloading the APIC toolkit to get the APIC CLI"
+#  exit 1
+#fi
 tar -zxvf toolkit-linux.tgz
 chmod +x apic-slim
 
