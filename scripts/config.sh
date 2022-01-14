@@ -20,9 +20,12 @@ mkdir config
 cd config
 
 # Get the needed URLs for the automation
-APIC_ADMIN_URL=`oc get routes -n ${APIC_NAMESPACE} | grep admin |  awk '{print $2}'`
+#APIC_ADMIN_URL=`oc get routes -n ${APIC_NAMESPACE} | grep admin |  awk '{print $2}'`
+APIC_INSTANCE=apicon-noprd-01
+APIC_ADMIN_URL=`oc -n ${APIC_NAMESPACE} get mgmt ${APIC_INSTANCE}-mgmt -o jsonpath="{.status.zenRoute}" && echo ""`
 if [[ -z "${APIC_ADMIN_URL}" ]]; then echo "[ERROR][config.sh] - An error ocurred getting the IBM API Connect Admin url"; exit 1; fi
-APIC_API_MANAGER_URL=`oc get routes -n ${APIC_NAMESPACE} | grep api-manager |  awk '{print $2}'`
+#APIC_API_MANAGER_URL=`oc get routes -n ${APIC_NAMESPACE} | grep api-manager |  awk '{print $2}'`
+APIC_API_MANAGER_URL=${APIC_ADMIN_URL}
 if [[ -z "${APIC_API_MANAGER_URL}" ]]; then echo "[ERROR][config.sh] - An error ocurred getting the IBM API Connect Management url"; exit 1; fi
 APIC_GATEWAY_URL=`oc get routes -n ${APIC_NAMESPACE} | grep gateway | grep -v manager | awk '{print $2}'`
 if [[ -z "${APIC_GATEWAY_URL}" ]]; then echo "[ERROR][config.sh] - An error ocurred getting the IBM API Connect Gateway url"; exit 1; fi
